@@ -52,6 +52,7 @@ import com.android.launcher3.LauncherFiles;
 import com.android.launcher3.R;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.config.FeatureFlags;
+import com.android.launcher3.LauncherTab;
 import com.android.launcher3.trust.TrustAppsActivity;
 import com.android.launcher3.uioverrides.plugins.PluginManagerWrapper;
 import com.android.launcher3.util.SecureSettingsObserver;
@@ -108,6 +109,8 @@ public class SettingsActivity extends FragmentActivity
         } else if (Utilities.KEY_DT_GESTURE.equals(key)) {
                 LauncherAppState.getInstanceNoCreate().setNeedsRestart();
         } else  if (Utilities.KEY_NOTIFICATION_GESTURE.equals(key)) {
+                LauncherAppState.getInstanceNoCreate().setNeedsRestart();
+        } else  if (Utilities.SHOW_LEFT_TAB_PREFERENCE_KEY.equals(key)) {
                 LauncherAppState.getInstanceNoCreate().setNeedsRestart();
         }
 
@@ -188,6 +191,12 @@ public class SettingsActivity extends FragmentActivity
                     screen.removePreference(preference);
                 }
             }
+            Preference leftTabPage = findPreference(Utilities.SHOW_LEFT_TAB_PREFERENCE_KEY);
+            leftTabPage.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    return true;
+                }
+            });
         }
 
         @Override
